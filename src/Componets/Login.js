@@ -1,10 +1,78 @@
 //rafce react arrow function component export
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Header from "./Header"
+import { checkValidateData } from "../Utils/validate";
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../Utils/firebase";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addUser } from "../Utils/userSlice";
 
 const Login = () => {
   const [isSignInForm,setIsSignInForm]=useState(true);
+  const [errorMesage,setErrorMessage]=useState(null);
+  const Navigate=useNavigate();
+  const dispatch=useDispatch();
+
+  const email=useRef(null);
+  const password=useRef(null);
+  const name=useRef(null)
+
+
+  const handleClick=()=>{
+    //Validation of Form
+    // console.log(email);
+    // console.log(password);
+
+    const message=checkValidateData(email.current.value,password.current.value);
+    // console.log(message);
+    setErrorMessage(message)
+
+    if(message) return;
+
+    //Sign In or Sign Up
+    if(!isSignInForm){
+      //Sign UP
+      createUserWithEmailAndPassword(auth, email.current.value,password.current.value)
+      .then((userCredential) => {
+        // Signed up 
+        
+        const user = userCredential.user;
+        console.log(user);
+        updateProfile(user, {
+          displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/146582441?v=4"
+          }).then(() => {
+            const {uid , email, displayName,photoURL} = auth.currentUser;
+            dispatch(addUser({uid : uid , email : email , displayName: displayName,photoURL : photoURL}));
+            Navigate("/browse");
+          }).catch((error) => {
+            setErrorMessage(error.message)
+          });
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        setErrorMessage(errorCode + "-" + errorMessage);
+      });
+    }else{
+      //Sign in
+      signInWithEmailAndPassword(auth,email.current.value,password.current.value)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user);
+        Navigate("/browse");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + "-"+ errorMessage);
+      });
+    }
+  }
 
   const toggleSignInForm=()=>{
     setIsSignInForm(!isSignInForm)
@@ -20,12 +88,13 @@ const Login = () => {
         </img>
       </div>
       <div className="w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80">
-        <form>
+        <form onSubmit={(e)=> e.preventDefault()}>
           <h1 className="font-bold text-2xl py-4 ">{isSignInForm ? "Sign In" : "Sign Up"}</h1>
-          {!isSignInForm && <input type="text" placeholder="Full Name" className="p-4 my-4 w-full bg-zinc-800 border-2 rounded-md bg-opacity-90" />}
-          <input type="text" placeholder="E-mail Address" className="p-4 my-4 w-full bg-zinc-800 border-2 rounded-md bg-opacity-90" />
-          <input type="text" placeholder="PassWord" className="p-4 my-4 w-full  bg-zinc-800 border-2 rounded-md bg-opacity-90" />
-          <button className="p-4 my-6 bg-red-700 w-full rounded-lg">{isSignInForm ? "Sign In" : "Sign Up"}</button>
+          {!isSignInForm && <input ref={name} type="text" placeholder="Full Name" className="p-4 my-4 w-full bg-zinc-800 border-2 rounded-md bg-opacity-90" />}
+          <input ref={email} type="text" placeholder="E-mail Address" className="p-4 my-4 w-full bg-zinc-800 border-2 rounded-md bg-opacity-90" />
+          <input ref={password} type="password" placeholder="Password" className="p-4 my-4 w-full  bg-zinc-800 border-2 rounded-md bg-opacity-90" />
+          <p className="text-red-600 font-bold m-1 p-1">{errorMesage}</p>
+          <button className="p-4 my-6 bg-red-700 w-full rounded-lg" onClick={handleClick}>{isSignInForm ? "Sign In" : "Sign Up"}</button>
           <p className="p-2 m-2 cursor-pointer" onClick={toggleSignInForm} >{isSignInForm ? "New User ? Sign up here. " : "Already Registered ? Sign In Now. "}</p>
         </form>
       </div>
