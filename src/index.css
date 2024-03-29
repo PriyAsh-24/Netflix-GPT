@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.example::-webkit-scrollbar {
+    opacity :0.5;
+  }
+  
+  /* Track */
+  .example::-webkit-scrollbar-track {
+    background: rgb(0, 0, 0);
+  }
+  
+  /* Handle */
+  .example::-webkit-scrollbar-thumb {
+    background: #141414;
+  }
+  
+  /* Handle on hover */
+  .example::-webkit-scrollbar-thumb:hover {
+    background: #313131;
+  }

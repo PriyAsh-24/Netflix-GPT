@@ -24,6 +24,10 @@
         - from tmdb website to get videos
         - to update our trailer we will use redux of movieSlic
 - using diffrent css for data from youtube(making it autoplay and mute)
+- Building Secondary Component
+- creating one card
+    - using CDN url given by tmdb (serach in guides >> images >> basics)
+    - Updating Movie List
 
 
 ## Features
