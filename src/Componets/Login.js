@@ -5,14 +5,14 @@ import Header from "./Header"
 import { checkValidateData } from "../Utils/validate";
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../Utils/firebase";
-import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice";
+import { USER_AVATAR } from "../Utils/Constants";
+
 
 const Login = () => {
   const [isSignInForm,setIsSignInForm]=useState(true);
   const [errorMesage,setErrorMessage]=useState(null);
-  const Navigate=useNavigate();
   const dispatch=useDispatch();
 
   const email=useRef(null);
@@ -41,11 +41,10 @@ const Login = () => {
         const user = userCredential.user;
         console.log(user);
         updateProfile(user, {
-          displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/146582441?v=4"
+          displayName: name.current.value, photoURL: USER_AVATAR
           }).then(() => {
             const {uid , email, displayName,photoURL} = auth.currentUser;
             dispatch(addUser({uid : uid , email : email , displayName: displayName,photoURL : photoURL}));
-            Navigate("/browse");
           }).catch((error) => {
             setErrorMessage(error.message)
           });
@@ -64,7 +63,6 @@ const Login = () => {
         // Signed in 
         const user = userCredential.user;
         console.log(user);
-        Navigate("/browse");
       })
       .catch((error) => {
         const errorCode = error.code;

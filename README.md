@@ -12,6 +12,18 @@
 - Using Firebase as backend
 - Installing Redux to keep user data
 - update profile
+- Fixing Bugs 
+- adding constants 
+- Using TMDB Database for movies
+- put the data in store (Creating MovieSlice)
+- create custom hooks for fetching and adding on redux
+- dividing our browse to two components(Main maovie and Secondary )
+- Creating the main Movie Component
+    - adding Video Title 
+    - adding video bg
+        - from tmdb website to get videos
+        - to update our trailer we will use redux of movieSlic
+- using diffrent css for data from youtube(making it autoplay and mute)
 
 
 ## Features
@@ -68,4 +80,27 @@
 ## To Sign out
 - from password authentication in firebase documentation
 - we can also find update profile also here to display name and image 
+
+## FIxing a bug 
+- the last time when we are authenticating and moviing to browse page using navigate it shows a error 
+- that navigate can be used inside router provider and our auth is in body
+- but header is used everywhere
+- so we add this auth component in header 
+- now if a user is logged in he will be logged in 
+- and he will not be able to go to login page until he sign out
+
+
+## Unsuscribing the user after auth
+- to do this we will add a return in useeffect (we learned this in class based component it is like a destructor)
+- in firebase it is said that if we keep OnAuthChange inside a fuction and call it after useEffect
+
+## TMDB
+- register on it
+- we will use the now playing api
+- we need to add a constant which is our autherization key
+- and then fetch our api
+
+// React Strict mode - we usually se our useeffect is called twice ,we get two objects when fecthing is done 
+- this is because of react strict mode in index .js 
+- this will only happen in our local
 
