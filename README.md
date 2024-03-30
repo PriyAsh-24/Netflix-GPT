@@ -34,6 +34,11 @@
 - using gpt data to fetch movie from TMDB
 - updating store with this data
 - Creating Movie suggestion Page 
+- adding env filen
+- Concept of Memoization
+- HOMEWORK
+    - To take OPenAi APi key from User
+- Made Responsive Website 
 
 
 ## Features
@@ -132,3 +137,6 @@
 - and write the data as written in it 
 - use process.env.NAME
 - write .env in gitignore
+
+## Memoization
+- unnessary calling of api again and again

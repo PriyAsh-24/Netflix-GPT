@@ -6,13 +6,15 @@ const GPTPage = () => {
   return (
     <div>
         <div className="fixed -z-10">
-            <img className=""
+            <img className="h-screen object-cover md:h-auto sm:h-screen"
             src={BG_IMAGE} 
             alt="BG">
             </img>
         </div>
-      <GptSearchBar/>
-      <GptSuggestions/>
+      <div className="">
+          <GptSearchBar/>
+          <GptSuggestions/>
+      </div>
     </div>
   )
 }
