@@ -31,6 +31,9 @@
 - Creating GPT Search page 
 - Using Language Constants (Multi Language Feature)
 - Integrating GPT API
+- using gpt data to fetch movie from TMDB
+- updating store with this data
+- Creating Movie suggestion Page 
 
 
 ## Features
@@ -111,3 +114,21 @@
 - this is because of react strict mode in index .js 
 - this will only happen in our local
 
+## GPT Data
+- we used gpt api 
+- which we get from the npm site (search for npm openai)
+- follow the process on site
+
+- now when you try to run it ,it will still give a error that is a warning that you are fetching data on browser site(i.e. is client site) and api key can be risked 
+![Error](./Notes/Screenshot%202024-03-30%20174453.png)
+- so we should do this api call on backend
+- but still not ready to use backend 
+- there is a option i.e to use  dangerouslyAllowBrowser: true in our openAi.js
+- i also Created a Dummy Data if subscription Expires
+
+
+## To hide Secret Information 
+- we create a .env file
+- and write the data as written in it 
+- use process.env.NAME
+- write .env in gitignore

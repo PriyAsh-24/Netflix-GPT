@@ -5,7 +5,7 @@ import GptSuggestions from "./GptSuggestions"
 const GPTPage = () => {
   return (
     <div>
-        <div className="absolute -z-10">
+        <div className="fixed -z-10">
             <img className=""
             src={BG_IMAGE} 
             alt="BG">
