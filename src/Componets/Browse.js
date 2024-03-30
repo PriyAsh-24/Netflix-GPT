@@ -6,9 +6,12 @@ import SecondaryMovieContainer from './SecondaryMovieContainer';
 import usePopularMovies from '../Hooks/usePopularMovies';
 import useUpcomingMovie from '../Hooks/useUpcomingMovie';
 import useTopRatedMovie from '../Hooks/useTopRatedMovie';
+import GPTPage from './GPTPage';
+import { useSelector } from 'react-redux';
 
 
 const Browse = () => {
+  const togglePage=useSelector((store)=> store.gpt.togglegpt)
   
   useNowPlayingMovies();
   usePopularMovies();
@@ -17,8 +20,13 @@ const Browse = () => {
   return (
     <div>
       <Header />
-      <MainMovieContainer />
-      <SecondaryMovieContainer/>
+      {togglePage ? (<GPTPage/> 
+      ): (
+      <>
+        <MainMovieContainer />
+        <SecondaryMovieContainer/>
+      </>
+      )}
     </div>
   )
 }

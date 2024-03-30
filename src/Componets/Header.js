@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../Utils/userSlice";
-import { LOGO } from "../Utils/Constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../Utils/Constants";
+import { toToggleToGptPage } from "../Utils/gptSlice";
+import { changeLanguage } from "../Utils/configSlice";
 
 
 const Header= ()=>{
+  const showLanguage=useSelector((store)=> store.gpt.togglegpt)
     const navigate=useNavigate();
     const user=useSelector((store)=>store.user)
     const dispatch=useDispatch();
@@ -36,8 +39,17 @@ const Header= ()=>{
         return ()=> unsuscribe();
       },[])
 
+      const toggletoGptScreen=()=>{
+        dispatch(toToggleToGptPage());
+      }
+
+      const handleLanguageChange=(e)=>{
+        // console.log(e.target.value);
+        dispatch(changeLanguage(e.target.value));
+      }
+
     return(
-            <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between items-center mt-5">
+            <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between items-center pt-7">
                 <div>
                 <img className="w-44"
                     src={LOGO}
@@ -45,8 +57,12 @@ const Header= ()=>{
                 </img>
                 </div>
                 {user && <div className="flex">
+                  {showLanguage && <select className="p-2 m-2 bg-gray-900 text-white" onChange={handleLanguageChange}>
+                    {SUPPORTED_LANGUAGES.map((lang)=> <option key ={lang.identifier} value={lang.identifier} >{lang.name} </option>)}
+                  </select>}
+                  <button className="bg-orange-400 p-3 m-2 rounded-md hover:bg-orange-300" onClick={toggletoGptScreen}> {showLanguage ? "Homepage" : "GPT Search"}</button>
                     <img src={user?.photoURL} alt="Photo" className="w-14 h-14"></img>
-                    <button className="font-bold text-white cursor-pointer" onClick={handlesignout}>Sign Out </button>
+                    <button className="font-bold text-white cursor-pointer pl-1" onClick={handlesignout}> [Sign Out]</button>
                 </div>}
             </div>
 

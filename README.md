@@ -28,6 +28,9 @@
 - creating one card
     - using CDN url given by tmdb (serach in guides >> images >> basics)
     - Updating Movie List
+- Creating GPT Search page 
+- Using Language Constants (Multi Language Feature)
+- Integrating GPT API
 
 
 ## Features
